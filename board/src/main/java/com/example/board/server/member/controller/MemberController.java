@@ -1,9 +1,14 @@
 package com.example.board.server.member.controller;
 
+import com.example.board.aop.annotation.SessionCheck;
+import com.example.board.server.member.dto.Member;
+import com.example.board.server.member.repository.MemberRepository;
+import com.example.board.server.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +16,14 @@ import static com.example.board.utils.SessionUtils.*;
 
 @RestController
 @RequestMapping("/members")
+@RequiredArgsConstructor
 public class MemberController {
 
+    private final MemberService memberService;
+    private final MemberRepository memberRepository;
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody MemberLogin memberLogin, HttpSession session) {
-        // logic
-        Long memberId = 0L;
-        //
+    public ResponseEntity login(@RequestBody @Valid MemberLogin memberLogin, HttpSession session) {
+        Long memberId = memberService.login(memberLogin.getLoginId(), memberLogin.getPassword());
         createSession(session, memberId);
 
         return ResponseEntity.ok().build();
@@ -25,25 +31,23 @@ public class MemberController {
 
     @PostMapping("/sign-up")
     public ResponseEntity signUp(@RequestBody @Valid MemberSign memberSign, HttpSession session) {
-        Long memberId = 0L;
-
-        // logic
-
-        //
+        Long memberId = memberService.signUp(memberSign.getLoginId(), memberSign.getPassword(), memberSign.getNickname());
         createSession(session, memberId);
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity signOut(@RequestBody @Valid String password) {
-
+    @SessionCheck
+    @DeleteMapping("/sign-out")
+    public ResponseEntity signOut(@RequestBody @Valid String password, HttpSession session) {
+        Long memberId = getSessionValue(session);
+        memberService.signOut(memberId, password);
+        invalidateSession(session);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/logout")
     public ResponseEntity logOut(HttpSession session) {
-
         invalidateSession(session);
 
         return ResponseEntity.ok().build();

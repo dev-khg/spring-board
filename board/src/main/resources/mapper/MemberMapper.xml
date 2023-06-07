@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.board.mapper.MemberMapper">
+    <select id="findById" resultType="com.example.board.server.member.dto.Member">
+        select *
+        from member
+        where id = #{id} and status = 'USING'
+    </select>
+    <select id="countByLoginId" resultType="int">
+        select COUNT(*)
+        from member
+        where login_id = #{loginId}
+    </select>
+    <select id="countByNickname" resultType="int">
+        select COUNT(*)
+        from member
+        where nickname = #{nickname}
+    </select>
+    <select id="findByLoginIdAndPassword"
+            resultType="com.example.board.server.member.dto.Member">
+        select *
+        from member
+        where login_id = #{loginId}
+          and password = #{password} and status = 'USING'
+
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.example.board.server.member.dto.Member">
+        insert into member (login_id, password, nickname, status)
+        values (#{loginId}, #{password}, #{nickname}, #{status})
+    </insert>
+    <update id="delete">
+        update member
+        SET status = 'DELETED'
+        where id = #{memberId}
+    </update>
+</mapper>

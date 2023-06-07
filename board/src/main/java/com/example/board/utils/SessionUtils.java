@@ -11,15 +11,15 @@ public class SessionUtils {
 
     private SessionUtils() { }
 
-    public static Integer getValue(HttpSession session) {
-        Integer value = (Integer) session.getAttribute(sessionAttributeKey);
+    public static Long getSessionValue(HttpSession session) {
+        Long value = (Long) session.getAttribute(sessionAttributeKey);
         if(value == null) {
             throw new NoSuchElementException("세션이 존재하지 않습니다.");
         }
         return value;
     }
 
-    public static void createSession(HttpSession session, Object value) {
+    public static void createSession(HttpSession session, Long value) {
         session.setAttribute(sessionAttributeKey, value);
     }
 
