@@ -14,6 +14,7 @@ public class Post {
     private String content;
     private LocalDateTime registerDate;
     private LocalDateTime modifyDate;
+    private int views;
     private Status status;
     private Long memberId;
 

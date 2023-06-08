@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PostMapper {
-    PostReturn findById(Long id);
+    PostReturn findById(@Param("id") Long id);
     List<PostReturn> findPosts(@Param("offset") Integer offset, @Param("count") Integer count);
     int insert(Post post);
     int update(@Param("postId") Long postId,@Param("title") String title, @Param("content") String content);
