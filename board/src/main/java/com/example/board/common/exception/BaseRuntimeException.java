@@ -2,10 +2,10 @@ package com.example.board.common.exception;
 
 import org.springframework.http.HttpStatus;
 
-public abstract class BaseException extends RuntimeException{
+public abstract class BaseRuntimeException extends RuntimeException{
     private HttpStatus httpStatus;
 
-    public BaseException(HttpStatus status, String message) {
+    public BaseRuntimeException(HttpStatus status, String message) {
         super(message);
         this.httpStatus = status;
     }

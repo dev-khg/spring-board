@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.board.mapper.PostMapper">
+    <select id="findById" resultType="com.example.board.server.post.PostReturn">
+        select p.id, p.title, p.content, p.register_date, m.nickname
+        from post p
+                 join member m on m.id = p.member_id
+        where p.id = #{id} and p.status = 'USING'
+    </select>
+    <select id="findPosts" resultType="com.example.board.server.post.PostReturn">
+        select p.id, p.title, p.content, p.register_date, m.nickname
+        from post p
+                 join member m on m.id = p.member_id
+        where p.status = 'USING'
+        order by p.register_date
+            limit #{count} offset #{offset}
+    </select>
+    <select id="findPostsByMemberId" resultType="com.example.board.server.post.PostReturn">
+        select p.id, p.title, p.content, p.register_date, m.nickname
+        from post p
+                 join member m on m.id = p.member_id
+        where p.member_id = #{memberId} and p.status = 'USING'
+        order by p.register_date
+            limit #{count} offset #{offset}
+    </select>
+    <select id="findByMemberIdAndPostId" resultType="int">
+        select count(*)
+        from post
+        where member_id = #{memberId} and id=#{postId} and status = 'USING'
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.example.board.server.post.dto.Post">
+        insert into post (title, content, member_id)
+        values (#{title}, #{content}, #{memberId})
+    </insert>
+    <update id="update">
+        UPDATE post
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+        </set>
+        WHERE id = #{postId} and status = 'USING'
+    </update>
+    <update id="delete">
+        update post
+        SET status = 'DELETED'
+        where id = #{postId}
+    </update>
+</mapper>

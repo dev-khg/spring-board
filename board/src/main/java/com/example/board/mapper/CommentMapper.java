@@ -1,6 +1,6 @@
 package com.example.board.mapper;
 
-import com.example.board.server.comment.Comment;
+import com.example.board.server.comment.dto.Comment;
 import com.example.board.server.comment.CommentReturn;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +15,7 @@ public interface CommentMapper {
 
     int insert(Comment comment);
 
-    int update(@Param("commentId") Long commentId,@Param("content") String content);
+    int update(@Param("commentId") Long commentId, @Param("score") int score, @Param("content") String content);
 
     int delete(Long commentId);
 

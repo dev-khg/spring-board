@@ -1,6 +1,6 @@
 package com.example.board.aop;
 
-import com.example.board.common.exception.UnAuthorizationException;
+import com.example.board.common.exception.UnAuthorizationRuntimeException;
 import com.example.board.utils.SessionUtils;
 import jakarta.servlet.http.HttpSession;
 import org.aspectj.lang.JoinPoint;
@@ -24,7 +24,7 @@ public class SessionAnnotation {
 
         Long memberId = SessionUtils.getSessionValue(httpSession);
         if (memberId == null) {
-            throw new UnAuthorizationException(HttpStatus.FORBIDDEN,"세션이 존재하지 않습니다.");
+            throw new UnAuthorizationRuntimeException(HttpStatus.FORBIDDEN,"세션이 존재하지 않습니다.");
         }
     }
 }

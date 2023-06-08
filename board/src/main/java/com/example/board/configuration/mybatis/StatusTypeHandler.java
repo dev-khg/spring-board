@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-
+@MappedTypes(Status.class)
 public class StatusTypeHandler extends BaseTypeHandler<Status> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Status parameter, JdbcType jdbcType) throws SQLException {
@@ -33,7 +33,7 @@ public class StatusTypeHandler extends BaseTypeHandler<Status> {
     }
 
     private Status getStatusEnum(String str){
-        //System.out.println(str);
+        System.out.println(str);
         return Arrays.stream(Status.values()).filter(
                 arg -> arg.getValue().equals(str)
         ).findAny().orElseThrow();
