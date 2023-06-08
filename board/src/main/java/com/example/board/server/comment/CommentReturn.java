@@ -8,5 +8,5 @@ public class CommentReturn {
     private String nickname;
     private String content;
     private LocalDateTime registerDate;
-    private int score;
+    private float score;
 }

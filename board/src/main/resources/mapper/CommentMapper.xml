@@ -13,7 +13,7 @@
         offset #{offset}
     </select>
     <select id="getCommentById" resultType="com.example.board.server.comment.CommentReturn">
-        select c.id, m.nickname, c.content, c.register_date
+        select c.id, m.nickname, c.content, c.register_date, c.score
         from comment c
                  join member m on m.id = c.member_id
         where c.id = #{commentId}
@@ -21,8 +21,8 @@
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.example.board.server.comment.dto.Comment">
-        insert into comment (post_id, member_id, content)
-        values (#{postId}, #{memberId}, #{content})
+        insert into comment (post_id, member_id, content, score)
+        values (#{postId}, #{memberId}, #{content}, #{score})
     </insert>
     <update id="update">
         update comment

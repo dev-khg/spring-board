@@ -15,6 +15,7 @@ public class Post {
     private LocalDateTime registerDate;
     private LocalDateTime modifyDate;
     private int views;
+    private float score;
     private Status status;
     private Long memberId;
 

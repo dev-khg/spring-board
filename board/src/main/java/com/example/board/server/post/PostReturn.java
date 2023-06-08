@@ -22,6 +22,7 @@ public class PostReturn implements Serializable {
     private LocalDateTime registerDate;
     private String nickname;
     private int views;
+    private float score;
 
     protected  PostReturn() { }
 
@@ -31,6 +32,7 @@ public class PostReturn implements Serializable {
         this.content = post.getContent();
         this.registerDate = post.getRegisterDate();
         this.views = post.getViews();
+        this.score = post.getScore();
     }
 
     public void increaseView() {

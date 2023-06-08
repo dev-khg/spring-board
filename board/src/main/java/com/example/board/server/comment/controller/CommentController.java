@@ -27,6 +27,7 @@ public class CommentController {
                                      @RequestBody CommentForm commentForm,
                                      HttpSession session) {
         Long memberId = SessionUtils.getSessionValue(session);
+        commentForm.checkValid();
         commentService.addComment(postId, memberId, commentForm.getContent(), commentForm.getScore());
 
         return ResponseEntity.ok().build();

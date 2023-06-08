@@ -3,9 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.board.mapper.PostMapper">
     <select id="findById" resultType="com.example.board.server.post.PostReturn">
-        select p.id, p.title, p.content, p.register_date, m.nickname, p.views
+        select p.id, p.title, p.content, p.register_date, m.nickname, p.views, avg(c.score) as score
         from post p
                  join member m on m.id = p.member_id
+                join comment c on c.post_id = p.id
         where p.id = #{id} and p.status = 'USING'
     </select>
     <select id="findPosts" resultType="com.example.board.server.post.PostReturn">

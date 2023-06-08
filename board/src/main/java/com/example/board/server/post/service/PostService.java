@@ -29,6 +29,7 @@ public class PostService {
 
     public PostReturn getPost(Long postId) {
         PostReturn postReturn = getRedisPost(postId);
+        log.info(postReturn.toString());
         increaseView(postReturn);
         return postReturn;
     }
